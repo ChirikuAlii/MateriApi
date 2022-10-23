@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         adapter = MovieListAdapter()
         binding.rvMovie.adapter = adapter
 
-
+        //inset data dummy
         adapter.addItem(DataDummy.listMovie)
         GlobalScope.launch {
 
