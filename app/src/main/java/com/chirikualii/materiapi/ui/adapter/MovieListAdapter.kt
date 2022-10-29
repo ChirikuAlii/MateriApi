@@ -18,7 +18,7 @@ class MovieListAdapter :RecyclerView.Adapter<MovieListAdapter.Holder>() {
             binding.tvGenre.text = data.genre
 
             Glide.with(binding.root.context)
-                .load(data.imagePoster)
+                .load("https://image.tmdb.org/t/p/w500${data.imagePoster}")
                 .into(binding.ivMovie)
 
         }
