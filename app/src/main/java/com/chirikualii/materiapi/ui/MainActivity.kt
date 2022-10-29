@@ -37,28 +37,36 @@ class MainActivity : AppCompatActivity() {
         val service = ApiClient.service
 
         GlobalScope.launch(Dispatchers.IO) {
-            val response =service.getPopularMovie()
+            try {
+                val response =service.getPopularMovie()
 
-            if(response.isSuccessful){
-                withContext(Dispatchers.Main){
-                    val listMovie =response.body()?.results?.map {
-                        Movie(
-                            title= it.title,
-                            genre = it.releaseDate,
-                            imagePoster = it.posterPath
-                        )
+                if(response.isSuccessful){
+                    withContext(Dispatchers.Main){
+                        val listMovie =response.body()?.results?.map {
+                            Movie(
+                                title= it.title,
+                                genre = it.releaseDate,
+                                imagePoster = it.posterPath
+                            )
+                        }
+                        withContext(Dispatchers.Main){
+                            if(listMovie!=null){
+                                adapter.addItem(listMovie)
+                            }
+                        }
+
+
                     }
-                    if(listMovie!=null){
-                        adapter.addItem(listMovie)
+
+                }else{
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(this@MainActivity, "gagal", Toast.LENGTH_SHORT).show()
                     }
-
                 }
+            }catch (e:Exception){
 
-            }else{
-                withContext(Dispatchers.Main){
-                    Toast.makeText(this@MainActivity, "gagal", Toast.LENGTH_SHORT).show()
-                }
             }
+
         }
     }
 }
